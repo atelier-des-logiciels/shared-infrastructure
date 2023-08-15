@@ -31,3 +31,9 @@ resource "ovh_cloud_project" "this" {
     pricing_mode = data.ovh_order_cart_product_plan.cloud.selected_price[0].pricing_mode
   }
 }
+
+resource "ovh_cloud_project_user" "cicd_user" {
+  service_name = ovh_cloud_project.this.project_id
+  role_name    = "administrator"
+  description = "CI/CD user"
+} 

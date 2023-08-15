@@ -1,3 +1,6 @@
+//go:build !CI
+// +build !CI
+
 package test_cloud
 
 import (

@@ -9,5 +9,5 @@ locals {
 
 inputs = {
   plan_code = "project.2018"
-  cloud_project_description = "Atelier des logiciels"
+  cloud_project_description = local.environment_vars.locals.description
 }

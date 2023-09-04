@@ -1,2 +1,6 @@
 .env*
+
 .terragrunt-cache
+.test-data
+.terraform*
+terraform.tfstate*

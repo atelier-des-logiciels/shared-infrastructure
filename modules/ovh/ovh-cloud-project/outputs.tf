@@ -13,3 +13,11 @@ output "cicd_user_password" {
   description = "Openstack password"
   sensitive = true
 }
+
+output "cicd_user_id" {
+  value = ovh_cloud_project_user.cicd_user.id
+}
+
+output "cicd_user_service_name" {
+  value = ovh_cloud_project_user.cicd_user.service_name
+}

@@ -1,7 +1,11 @@
+//go:build !CI
+// +build !CI
+
 package test_cloud
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 
@@ -11,29 +15,31 @@ import (
 	"golang.org/x/exp/maps"
 )
 
-func TestOSObjectStorage(t *testing.T) {
+func TestOVHObjectStorage(t *testing.T) {
 	t.Parallel()
 
-	workingDir := test_structure.CopyTerraformFolderToTemp(t, "../../modules/ovh", "os-object-storage")
+	workingDir := test_structure.CopyTerraformFolderToTemp(t, "../../modules/ovh", "ovh-object-storage")
 
 	defer test_structure.RunTestStage(t, "cleanup", func() {
-		cleanup_os_object_storage(t, workingDir)
+		cleanup_ovh_object_storage(t, workingDir)
 	})
 
 	test_structure.RunTestStage(t, "deploy", func() {
-		deploy_os_object_storage(t, workingDir, map[string]interface{}{})
+		deploy_ovh_object_storage(t, workingDir, map[string]interface{}{})
 	})
 
 	test_structure.RunTestStage(t, "validate", func() {
-		validate_os_object_storage(t, workingDir)
+		validate_ovh_object_storage(t, workingDir)
 	})
 }
 
-func deploy_os_object_storage(t *testing.T, workingDir string, vars map[string]interface{}) {
+func deploy_ovh_object_storage(t *testing.T, workingDir string, vars map[string]interface{}) {
 	container_name := strings.ToLower(fmt.Sprintf("test%s", random.UniqueId()))
 
 	tfVars := map[string]interface{}{
 		"container_name": container_name,
+		"user_id":        os.Getenv("OS_USERID"),
+		"service_name":   os.Getenv("OS_TENANT_ID"),
 	}
 
 	maps.Copy(tfVars, vars)
@@ -48,12 +54,12 @@ func deploy_os_object_storage(t *testing.T, workingDir string, vars map[string]i
 	terraform.InitAndApply(t, terraformOptions)
 }
 
-func cleanup_os_object_storage(t *testing.T, workingDir string) {
+func cleanup_ovh_object_storage(t *testing.T, workingDir string) {
 	terraformOptions := test_structure.LoadTerraformOptions(t, workingDir)
 	terraform.Destroy(t, terraformOptions)
 }
 
-func validate_os_object_storage(t *testing.T, workingDir string) {
+func validate_ovh_object_storage(t *testing.T, workingDir string) {
 	// terraformOptions := test_structure.LoadTerraformOptions(t, workingDir)
 
 	// assert := assert.New(t)

@@ -100,3 +100,10 @@ pushd test
 go mod tidy
 popd
 ```
+
+## Procedure to install a environment
+
+Steps to execute manually:
+- Create a public cloud project
+- Create a s3 bucket
+- Create a vrack

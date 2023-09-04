@@ -11,16 +11,19 @@ locals {
   environment_with_dashes = replace(local.env_vars.locals.environment, ".", "-")
 }
 
-remote_state {
-  backend = "s3"
-  generate = {
-    path = "backend.tf"
-    if_exists = "overwrite"
-  }
-  config = {
-    bucket = "terraform-remote-state"
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+terraform {
+  backend "s3" {
+    bucket = "tf-remote-state"
     key    = "${local.moduleFolder}/terraform.tfstate"
-    region = local.region
-    endpoint = local.env_vars.locals.backend_address
+    region = "${local.region}"
+    endpoint = "${local.env_vars.locals.backend_address}"
+    skip_credentials_validation = true
+    skip_region_validation = true
   }
+}
+EOF
 }

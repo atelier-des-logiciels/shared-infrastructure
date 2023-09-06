@@ -1,4 +1,4 @@
-# Infrastructure of Atelier des logiciel
+# Infrastructure of Atelier des logiciels
 
 ## Folder structure
 

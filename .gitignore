@@ -4,3 +4,5 @@
 .test-data
 .terraform*
 terraform.tfstate*
+
+.*kubeconfig*

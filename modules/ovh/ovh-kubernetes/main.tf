@@ -19,3 +19,13 @@ resource "ovh_cloud_project_kube" "this" {
       private_network_routing_as_default = false
   }
 }
+
+resource "ovh_cloud_project_kube_nodepool" "this" {
+  service_name  = var.service_name
+  kube_id       = ovh_cloud_project_kube.this.id
+  name          = "default" 
+  flavor_name   = var.flavor_name
+  desired_nodes = var.desired_nodes
+  min_nodes     = var.min_nodes
+  max_nodes     = var.max_nodes
+}

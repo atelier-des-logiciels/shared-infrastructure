@@ -25,8 +25,12 @@ TEST_REPORT_CMD :=  if [ -z "$(NO_TEST_REPORT)" ]; then \
 											cat $(TEST_REPORT_DIR)/summary.log; \
 										fi
 
-.PHONY: test test-ci test-one test-install test-format test-lint tf-lint tf-plan tf-plan-all tf-apply tf-apply-all tf-apply-all-auto-approve tf-destroy tf-destroy-all tf-output tf-force-unlock
+.PHONY: all devenv test test-ci test-one test-install test-format test-lint tf-lint tf-plan tf-plan-all tf-apply tf-apply-all tf-apply-all-auto-approve tf-destroy tf-destroy-all tf-output tf-force-unlock
 
+all:
+
+devenv:
+	devenv shell
 
 test-ovh:
 	set -o pipefail; cd test && go test $(TEST_PARAMS) -v -tags CI ./ovh $(TEST_SUMMARY_AND_LOGS); \

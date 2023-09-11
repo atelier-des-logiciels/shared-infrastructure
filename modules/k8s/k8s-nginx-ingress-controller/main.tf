@@ -29,4 +29,9 @@ resource "helm_release" "ingress_nginx" {
     name  = "controller.service.type"
     value = "LoadBalancer"
   }
+
+  set {
+    name = "controller.extraArgs.enable-ssl-passthrough"
+    value = "true"
+  }
 }
